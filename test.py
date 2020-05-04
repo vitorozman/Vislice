@@ -16,3 +16,10 @@ def je_prastevilo(n):
 for st in range(1, 200):
     if je_prastevilo(st):
         print(st)
+
+def najdi_max_prastevilo(sez):
+    s = []
+    for st in sez:
+        if je_prastevilo(st):
+            s.append(st)
+    return max(s)
