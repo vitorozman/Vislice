@@ -15,11 +15,11 @@ with open('besede.txt', encoding='UTF-8') as datoteka_bazena:
 class Igra:
 
     def __init__(self, geslo, crke=None):
-        self.geslo = geslo.lover()
+        self.geslo = geslo.lower()
         if crke == None:
             self.crke = []
         else:
-            self.crke = [c.lover() for c in crke]
+            self.crke = [c.lower() for c in crke]
 
     def napacne_crke(self):
         return [c for c in self.crke if c not in self.geslo]
@@ -54,7 +54,7 @@ class Igra:
         return trenutno
     
     def ugibaj(self, ugibana_crka):
-        ugibana_crka = ugibana_crka.lover()
+        ugibana_crka = ugibana_crka.lower()
 
         if ugibana_crka in self.crke:
             return PONOVLJENA_CRKA
@@ -74,6 +74,6 @@ class Igra:
 
 
 def nova_igra():
-    naklucna_beseda = random.choices(bazen_besed)
+    naklucna_beseda = random.choice(bazen_besed)
     return Igra(naklucna_beseda)
 
