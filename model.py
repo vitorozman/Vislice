@@ -1,11 +1,14 @@
 import random
 
 
+ZACETEK = 'Z'
+
 STEVILO_DOVOLJENIH_NAPAK = 10
 
 PRAVILNA_CRKA, PONOVLJENA_CRKA, NAPACNA_CRKA = '+', 'o', '-'
 
 ZMAGA, PORAZ = 'W', 'X'
+
 
 bazen_besed = []
 with open('besede.txt', encoding='UTF-8') as datoteka_bazena:
@@ -71,6 +74,31 @@ class Igra:
                 return PORAZ 
             else:
                 NAPACNA_CRKA
+
+
+class Vislice:
+    '''
+    Skrbi za trenutno stanje VEC iger (imel bo vec objektov tipa Igra)
+    '''
+    def __init__(self):
+        self.igre = {} #slover id-ju priredi igre
+        
+    def prost_id_igre(self):#vrne nek id ki ga ne uporablja nebona igra
+        if len(self.igre) == 0:
+            return 0
+        else:
+            max(self.igre.keys()) + 1
+
+    def nova_igra(self):
+        nov_id = self.prost_id_igre()
+        sveza_igra = nova_igra()
+        self.igre[nov_id] = (sveza_igra, ZACETEK)
+        return nov_id
+
+    def ugibaj(self, id_igre, crka):
+        trenutna_igra, _ = self.igre[id_igre]
+        novo_staneje = trenutna_igra.ugibaj(crka)
+        self.igre[id_igre] = (trenutna_igra, novo_staneje)
 
 
 def nova_igra():
