@@ -1,5 +1,5 @@
 import random
-
+import json
 
 ZACETEK = 'Z'
 
@@ -90,15 +90,35 @@ class Vislice:
             max(self.igre.keys()) + 1
 
     def nova_igra(self):
+        self.preberi_iz_datoteke()
         nov_id = self.prost_id_igre()
         sveza_igra = nova_igra()
         self.igre[nov_id] = (sveza_igra, ZACETEK)
+        self.shrani_v_datoteko()
         return nov_id
 
     def ugibaj(self, id_igre, crka):
+        self.preberi_iz_datoteke()
         trenutna_igra, _ = self.igre[id_igre]
         novo_staneje = trenutna_igra.ugibaj(crka)
         self.igre[id_igre] = (trenutna_igra, novo_staneje)
+        self.shrani_v_datoteko()
+
+    def shrani_v_datoteko(self):
+        igre = {}
+        for id_igre, (igra, stanje) in self.igre.items(): #id_ogre, (igra, stanje)
+            igre[id_igre] = ((igra.geslo, igra.crke), stanje)
+        
+        with open('stanje_iger.json', 'w') as out_file:
+            json.dump(igre, out_file)
+
+    def preberi_iz_datoteke(self):
+        with open('stanje_iger.json', 'r') as in_file:
+            igre = json.load(in_file)
+
+        self.igre = {}
+        for id_igre, ((geslo, crke), stanje) in igre.items():
+            self.igre[int(id_igre)] = Igra(geslo, crke), stanje
 
 
 def nova_igra():
