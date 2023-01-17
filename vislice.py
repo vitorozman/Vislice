@@ -2,10 +2,6 @@ import bottle
 import model
 
 
-
-
-
-
 ID_IGRE_COOKIE_NAME = 'id_igre'
 COOKIE_SECRET = 'my_very_special - secret key'
 
